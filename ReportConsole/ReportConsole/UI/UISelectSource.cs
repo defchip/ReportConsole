@@ -61,8 +61,11 @@ namespace ReportConsole.UI
 				this.cboSources.BackColor = validColour;
 			}
 
-			MessageBox.Show("");
+			MessageBox.Show("Source Selected.");
+
 			_sourceId = (int)this.cboSources.SelectedValue;
+
+			this.Close();
 		}
 
 

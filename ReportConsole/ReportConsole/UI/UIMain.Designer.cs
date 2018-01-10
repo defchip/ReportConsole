@@ -29,15 +29,18 @@
 		private void InitializeComponent()
 		{
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.statusStrip = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.menuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -51,21 +54,6 @@
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
-			// panel1
-			// 
-			this.panel1.Controls.Add(this.treeView1);
-			this.panel1.Location = new System.Drawing.Point(0, 40);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(960, 600);
-			this.panel1.TabIndex = 1;
-			// 
-			// treeView1
-			// 
-			this.treeView1.Location = new System.Drawing.Point(0, 0);
-			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(960, 600);
-			this.treeView1.TabIndex = 0;
-			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -74,8 +62,8 @@
             this.addReportToolStripMenuItem,
             this.editReportToolStripMenuItem});
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(66, 29);
-			this.toolStripMenuItem1.Text = "Edit...";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(54, 29);
+			this.toolStripMenuItem1.Text = "Edit";
 			// 
 			// selectSourceToolStripMenuItem
 			// 
@@ -105,11 +93,42 @@
 			this.editReportToolStripMenuItem.Text = "Edit Report...";
 			this.editReportToolStripMenuItem.Click += new System.EventHandler(this.editReportToolStripMenuItem_Click);
 			// 
+			// panel1
+			// 
+			this.panel1.Controls.Add(this.treeView1);
+			this.panel1.Location = new System.Drawing.Point(0, 40);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(960, 600);
+			this.panel1.TabIndex = 1;
+			// 
+			// treeView1
+			// 
+			this.treeView1.Location = new System.Drawing.Point(0, 0);
+			this.treeView1.Name = "treeView1";
+			this.treeView1.Size = new System.Drawing.Size(960, 600);
+			this.treeView1.TabIndex = 0;
+			// 
+			// statusStrip
+			// 
+			this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+			this.statusStrip.Location = new System.Drawing.Point(0, 609);
+			this.statusStrip.Name = "statusStrip";
+			this.statusStrip.Size = new System.Drawing.Size(961, 28);
+			this.statusStrip.TabIndex = 2;
+			// 
+			// toolStripStatusLabel1
+			// 
+			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 23);
+			// 
 			// UIMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(961, 637);
+			this.Controls.Add(this.statusStrip);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
@@ -118,6 +137,8 @@
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.panel1.ResumeLayout(false);
+			this.statusStrip.ResumeLayout(false);
+			this.statusStrip.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -133,5 +154,7 @@
 		private System.Windows.Forms.ToolStripMenuItem addSourceToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem addReportToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem editReportToolStripMenuItem;
+		private System.Windows.Forms.StatusStrip statusStrip;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 	}
 }

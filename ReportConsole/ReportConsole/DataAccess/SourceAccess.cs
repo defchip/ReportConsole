@@ -10,7 +10,7 @@ namespace ReportConsole
 	/// <summary>
 	/// Assembly implements ADO.NET database access methods to SQL database. 
 	/// </summary>
-	public class SourceAccess : IDataAccess
+	public class SourceAccess : ISourceAccess
 	{
 		#region class-level declarations
 		private bool hasOpened = true;

@@ -137,7 +137,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdClose;
-			this.ClientSize = new System.Drawing.Size(603, 360);
+			this.ClientSize = new System.Drawing.Size(599, 356);
 			this.ControlBox = false;
 			this.Controls.Add(this.cmdReset);
 			this.Controls.Add(this.cmdClose);
@@ -149,7 +149,6 @@
 			this.Controls.Add(this.txtName);
 			this.Controls.Add(this.cmdAddSource);
 			this.Controls.Add(this.txtServer);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "UIAddSource";

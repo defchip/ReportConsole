@@ -1,5 +1,7 @@
 ﻿using ReportConsole.BusinessObjects;
+using System.Data;
 using System.Windows.Forms;
+using System;
 
 namespace ReportConsole.UI
 {
@@ -27,9 +29,15 @@ namespace ReportConsole.UI
 				}
 			}
 
+			InitialiseSource();
+		}
 
-
-
+		private void InitialiseSource()
+		{
+			DataTable data = queryProvider.GetSource(sourceId);
+			string sourceName = data.Rows[0][1].ToString();
+			this.toolStripStatusLabel1.Text = sourceName;
+			statusStrip.Refresh();
 		}
 
 		private void addSourceToolStripMenuItem_Click(object sender, System.EventArgs e)

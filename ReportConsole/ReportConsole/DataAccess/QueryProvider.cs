@@ -29,6 +29,12 @@ namespace ReportConsole
 			return dataAccess.GetDataTable(query);
 		}
 
+		public DataTable GetSource(int sourceId)
+		{
+			string query = "SELECT * FROM SOURCES WHERE SOURCE_ID = " + sourceId.ToString();
+			return dataAccess.GetDataTable(query);
+		}
+
 
 		//Sample method illustrating use of generic parameterised stored procedure method
 		//in data access layer
