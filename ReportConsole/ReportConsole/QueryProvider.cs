@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReportConsole.BusinessObjects;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -20,6 +21,18 @@ namespace ReportConsole
 		{
 			string query = "";
 			return dataAccess.GetDataTable(query);
+		}
+
+
+
+		//Sample method illustrating use of generic parameterised stored procedure method
+		//in data access layer
+		public void AddSource(Source source)
+		{
+			dataAccess.ExecuteParameterisedSproc("USP_INS_SOURCE",
+				new object[,]{
+				{"SOURCE_NAME",source.SourceName },
+				{"SOURCE_CONN",source.SourceConn}});
 		}
 	}
 }
