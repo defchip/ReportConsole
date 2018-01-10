@@ -1,10 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using ReportConsole.BusinessObjects;
+using System.Windows.Forms;
 
 namespace ReportConsole.UI
 {
 	public partial class UIMain : Form
 	{
 		QueryProvider queryProvider;
+		int sourceId;
 
 		public UIMain(QueryProvider queryProvider)
 		{
@@ -16,20 +18,30 @@ namespace ReportConsole.UI
 
 		private void selectSourceToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
-			Form selectSource = new UISelectSource(queryProvider);
-			if (selectSource != null)
+			using (UISelectSource selectSource = new UISelectSource(queryProvider))
 			{
-				selectSource.ShowDialog();
+				if (selectSource != null)
+				{
+					selectSource.ShowDialog();
+					sourceId = selectSource.SourceId;
+				}
 			}
+
+
+
+
 		}
 
 		private void addSourceToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
-			Form addSource = new UIAddSource(queryProvider);
-			if (addSource != null)
+			using (UIAddSource addSource = new UIAddSource(queryProvider))
 			{
-				addSource.ShowDialog();
-			}			
+				;
+				if (addSource != null)
+				{
+					addSource.ShowDialog();
+				}
+			}
 		}
 
 		private void addReportToolStripMenuItem_Click(object sender, System.EventArgs e)

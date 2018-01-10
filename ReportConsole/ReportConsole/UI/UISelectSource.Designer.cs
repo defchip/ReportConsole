@@ -30,8 +30,8 @@
 		{
 			this.cboSources = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.cmdOpenSource = new System.Windows.Forms.Button();
 			this.cmdClose = new System.Windows.Forms.Button();
+			this.cmdOpenSource = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// cboSources
@@ -52,16 +52,6 @@
 			this.label1.TabIndex = 1;
 			this.label1.Text = "Select Source";
 			// 
-			// cmdOpenSource
-			// 
-			this.cmdOpenSource.Location = new System.Drawing.Point(432, 48);
-			this.cmdOpenSource.Name = "cmdOpenSource";
-			this.cmdOpenSource.Size = new System.Drawing.Size(160, 32);
-			this.cmdOpenSource.TabIndex = 14;
-			this.cmdOpenSource.Text = "Open Source";
-			this.cmdOpenSource.UseVisualStyleBackColor = true;
-			this.cmdOpenSource.Click += new System.EventHandler(this.cmdReset_Click);
-			// 
 			// cmdClose
 			// 
 			this.cmdClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -73,18 +63,26 @@
 			this.cmdClose.UseVisualStyleBackColor = true;
 			this.cmdClose.Click += new System.EventHandler(this.cmdClose_Click);
 			// 
+			// cmdOpenSource
+			// 
+			this.cmdOpenSource.Location = new System.Drawing.Point(432, 48);
+			this.cmdOpenSource.Name = "cmdOpenSource";
+			this.cmdOpenSource.Size = new System.Drawing.Size(160, 32);
+			this.cmdOpenSource.TabIndex = 17;
+			this.cmdOpenSource.Text = "Open Source";
+			this.cmdOpenSource.UseVisualStyleBackColor = true;
+			this.cmdOpenSource.Click += new System.EventHandler(this.cmdOpenSource_Click);
+			// 
 			// UISelectSource
 			// 
-			this.AcceptButton = this.cmdOpenSource;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(603, 218);
 			this.ControlBox = false;
-			this.Controls.Add(this.cmdClose);
 			this.Controls.Add(this.cmdOpenSource);
+			this.Controls.Add(this.cmdClose);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.cboSources);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Name = "UISelectSource";
 			this.Text = "Select Source";
 			this.ResumeLayout(false);
@@ -96,7 +94,7 @@
 
 		private System.Windows.Forms.ComboBox cboSources;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button cmdOpenSource;
 		private System.Windows.Forms.Button cmdClose;
+		private System.Windows.Forms.Button cmdOpenSource;
 	}
 }
