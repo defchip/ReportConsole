@@ -14,10 +14,9 @@ namespace ReportConsole.UI
 	public partial class UIAddSource : Form
 	{
 		QueryProvider queryProvider;
-		string sourceName, sourceConn;
 		System.Drawing.Color invalidColour = Color.Yellow;
 		System.Drawing.Color validColour = Color.White;
-		Source source = new Source();
+		Source source;
 
 		public UIAddSource(QueryProvider queryProvider)
 		{
@@ -28,13 +27,18 @@ namespace ReportConsole.UI
 
 		private void InitialiseFormControls()
 		{
+			source = null;
+			this.txtName.Text = "";
+			this.txtServer.Text = "";
 			this.cboDatabases.Enabled = false;
-			this.cmdCheckSource.Enabled = false;
 			this.cmdAddSource.Enabled = false;
+			this.cboDatabases.Text = null;
 		}
 
 		private void cmdFetch_Click(object sender, EventArgs e)
 		{
+			source = new Source();
+
 			if (String.IsNullOrEmpty(this.txtName.Text))
 			{
 				MessageBox.Show("Please provide a name for the new source.");
@@ -67,7 +71,7 @@ namespace ReportConsole.UI
 				foreach (DataRow item in databases.Rows)
 				{
 					dbList.Add(item[0].ToString());
-					MessageBox.Show(item[0].ToString());
+					//MessageBox.Show(item[0].ToString());
 
 				}
 
@@ -78,21 +82,30 @@ namespace ReportConsole.UI
 					this.cboDatabases.SelectedIndex = -1;
 				}
 
-				this.cmdCheckSource.Enabled = true;
+				this.cmdAddSource.Enabled = true;
 			}
 
 		}
 
-		private void cmdCheckSource_Click(object sender, EventArgs e)
+		private void cmdReset_Click(object sender, EventArgs e)
 		{
-			//Data Source = THINKPAD; Initial Catalog = DEV_REPORT_CONSOLE_01; Integrated Security = True"
+			InitialiseFormControls();
+		}
 
+		private void cmdClose_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+
+		private void cmdAddSource_Click(object sender, EventArgs e)
+		{
 			if (String.IsNullOrEmpty(this.cboDatabases.Text))
 			{
 				MessageBox.Show("Please provide a database name.");
 				this.cboDatabases.BackColor = invalidColour;
 				return;
-			} else
+			}
+			else
 			{
 				source.Database = this.cboDatabases.Text;
 				this.cboDatabases.BackColor = validColour;
@@ -108,18 +121,6 @@ namespace ReportConsole.UI
 			}
 
 			MessageBox.Show("Source successfully added.");
-		}
-
-
-		private void cmdAddSource_Click(object sender, EventArgs e)
-		{
-			var data = queryProvider.GetData();
-
-			foreach (var item in data.Columns)
-			{
-				MessageBox.Show(item.ToString());
-			}
-
 		}
 	}
 }

@@ -23,6 +23,11 @@ namespace ReportConsole
 			return dataAccess.GetDataTable(query);
 		}
 
+		public DataTable GetSources()
+		{
+			string query = "SELECT * FROM SOURCES";
+			return dataAccess.GetDataTable(query);
+		}
 
 
 		//Sample method illustrating use of generic parameterised stored procedure method
