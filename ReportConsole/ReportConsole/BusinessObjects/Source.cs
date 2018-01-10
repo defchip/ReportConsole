@@ -8,11 +8,9 @@ namespace ReportConsole.BusinessObjects
 {
 	public class Source
 	{
-		private string _sourceName, _sourceConn;
-
-		public string SourceName { get; set; }
-		public string SourceConn { get; set; }
-
-
+		public string Name { get; set; }
+		public string Server { get; set; }
+		public string Database { get; set; }
+		public bool IsIntegratedSecurity { get; set; }
 	}
 }

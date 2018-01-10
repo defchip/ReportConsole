@@ -15,6 +15,7 @@ namespace ReportConsole.UI
 	{
 		QueryProvider queryProvider;
 		string sourceName, sourceConn;
+		System.Drawing.Color invalidColour = Color.Yellow;
 
 		public UIAddSource(QueryProvider queryProvider)
 		{
@@ -24,28 +25,51 @@ namespace ReportConsole.UI
 
 		private void cmdCheckSource_Click(object sender, EventArgs e)
 		{
-			this.sourceName = this.txtName.Text;
-			this.sourceConn = this.txtConn.Text;
+			//Data Source = THINKPAD; Initial Catalog = DEV_REPORT_CONSOLE_01; Integrated Security = True"
+
+			if (String.IsNullOrEmpty(this.txtName.Text))
+			{
+				MessageBox.Show("Please provide a name for the new source.");
+				this.txtName.BackColor = invalidColour;
+				return;
+			}
+			if (String.IsNullOrEmpty(this.txtServer.Text))
+			{
+				MessageBox.Show("Please provide a server name.");
+				this.txtServer.BackColor = invalidColour;
+				return;
+			}
+			if (String.IsNullOrEmpty(this.txtDatabase.Text))
+			{
+				MessageBox.Show("Please provide a database name.");
+				this.txtDatabase.BackColor = invalidColour;
+				return;
+			}
 
 			var source = new Source();
-			source.SourceName = sourceName;
-			source.SourceConn = sourceConn;
 
+			source.Name = this.txtName.Text;
+			source.Server = this.txtServer.Text;
+			source.Database = this.txtDatabase.Text;
 
-			if (String.IsNullOrEmpty(sourceName))
+			try
 			{
-				return;
+				queryProvider.AddSource(source);
 			}
-			if (String.IsNullOrEmpty(sourceConn))
+			catch (Exception ex)
 			{
-				return;
+				MessageBox.Show(ex.Message);
 			}
-
-			queryProvider.AddSource(source);
 		}
 
 		private void cmdAddSource_Click(object sender, EventArgs e)
 		{
+			var data = queryProvider.GetData();
+
+			foreach (var item in data.Columns)
+			{
+				MessageBox.Show(item.ToString());
+			}
 
 		}
 	}

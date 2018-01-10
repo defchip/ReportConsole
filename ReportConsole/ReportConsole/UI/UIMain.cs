@@ -21,7 +21,11 @@ namespace ReportConsole.UI
 
 		private void addSourceToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
-			
+			Form addSource = new UIAddSource(queryProvider);
+			if (addSource != null)
+			{
+				addSource.ShowDialog();
+			}			
 		}
 
 		private void addReportToolStripMenuItem_Click(object sender, System.EventArgs e)

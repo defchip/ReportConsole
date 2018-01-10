@@ -19,7 +19,7 @@ namespace ReportConsole
 
 		public DataTable GetData()
 		{
-			string query = "";
+			string query = "SELECT * FROM SOURCES";
 			return dataAccess.GetDataTable(query);
 		}
 
