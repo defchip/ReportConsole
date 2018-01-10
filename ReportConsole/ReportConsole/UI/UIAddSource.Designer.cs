@@ -32,24 +32,25 @@
 			this.cmdAddSource = new System.Windows.Forms.Button();
 			this.cmdCheckSource = new System.Windows.Forms.Button();
 			this.txtName = new System.Windows.Forms.TextBox();
-			this.txtDatabase = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
+			this.cmdFetch = new System.Windows.Forms.Button();
+			this.cboDatabases = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
 			// 
 			// txtServer
 			// 
 			this.txtServer.Location = new System.Drawing.Point(152, 40);
 			this.txtServer.Name = "txtServer";
-			this.txtServer.Size = new System.Drawing.Size(576, 26);
+			this.txtServer.Size = new System.Drawing.Size(440, 26);
 			this.txtServer.TabIndex = 0;
 			// 
 			// cmdAddSource
 			// 
-			this.cmdAddSource.Location = new System.Drawing.Point(592, 144);
+			this.cmdAddSource.Location = new System.Drawing.Point(152, 216);
 			this.cmdAddSource.Name = "cmdAddSource";
-			this.cmdAddSource.Size = new System.Drawing.Size(136, 32);
+			this.cmdAddSource.Size = new System.Drawing.Size(160, 32);
 			this.cmdAddSource.TabIndex = 1;
 			this.cmdAddSource.Text = "Add";
 			this.cmdAddSource.UseVisualStyleBackColor = true;
@@ -57,11 +58,11 @@
 			// 
 			// cmdCheckSource
 			// 
-			this.cmdCheckSource.Location = new System.Drawing.Point(592, 104);
+			this.cmdCheckSource.Location = new System.Drawing.Point(152, 176);
 			this.cmdCheckSource.Name = "cmdCheckSource";
-			this.cmdCheckSource.Size = new System.Drawing.Size(136, 32);
+			this.cmdCheckSource.Size = new System.Drawing.Size(160, 32);
 			this.cmdCheckSource.TabIndex = 2;
-			this.cmdCheckSource.Text = "Check";
+			this.cmdCheckSource.Text = "Check Connection";
 			this.cmdCheckSource.UseVisualStyleBackColor = true;
 			this.cmdCheckSource.Click += new System.EventHandler(this.cmdCheckSource_Click);
 			// 
@@ -69,15 +70,8 @@
 			// 
 			this.txtName.Location = new System.Drawing.Point(152, 8);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(576, 26);
+			this.txtName.Size = new System.Drawing.Size(440, 26);
 			this.txtName.TabIndex = 3;
-			// 
-			// txtDatabase
-			// 
-			this.txtDatabase.Location = new System.Drawing.Point(152, 72);
-			this.txtDatabase.Name = "txtDatabase";
-			this.txtDatabase.Size = new System.Drawing.Size(576, 26);
-			this.txtDatabase.TabIndex = 5;
 			// 
 			// label1
 			// 
@@ -100,21 +94,40 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(8, 72);
+			this.label3.Location = new System.Drawing.Point(8, 128);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(79, 20);
+			this.label3.Size = new System.Drawing.Size(128, 20);
 			this.label3.TabIndex = 8;
-			this.label3.Text = "Database";
+			this.label3.Text = "Select Database";
+			// 
+			// cmdFetch
+			// 
+			this.cmdFetch.Location = new System.Drawing.Point(152, 80);
+			this.cmdFetch.Name = "cmdFetch";
+			this.cmdFetch.Size = new System.Drawing.Size(160, 32);
+			this.cmdFetch.TabIndex = 10;
+			this.cmdFetch.Text = "Fetch Databases";
+			this.cmdFetch.UseVisualStyleBackColor = true;
+			this.cmdFetch.Click += new System.EventHandler(this.cmdFetch_Click);
+			// 
+			// cboDatabases
+			// 
+			this.cboDatabases.FormattingEnabled = true;
+			this.cboDatabases.Location = new System.Drawing.Point(152, 128);
+			this.cboDatabases.Name = "cboDatabases";
+			this.cboDatabases.Size = new System.Drawing.Size(440, 28);
+			this.cboDatabases.TabIndex = 11;
 			// 
 			// UIAddSource
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(737, 564);
+			this.ClientSize = new System.Drawing.Size(760, 446);
+			this.Controls.Add(this.cboDatabases);
+			this.Controls.Add(this.cmdFetch);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.txtDatabase);
 			this.Controls.Add(this.txtName);
 			this.Controls.Add(this.cmdCheckSource);
 			this.Controls.Add(this.cmdAddSource);
@@ -132,9 +145,10 @@
 		private System.Windows.Forms.Button cmdAddSource;
 		private System.Windows.Forms.Button cmdCheckSource;
 		private System.Windows.Forms.TextBox txtName;
-		private System.Windows.Forms.TextBox txtDatabase;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Button cmdFetch;
+		private System.Windows.Forms.ComboBox cboDatabases;
 	}
 }

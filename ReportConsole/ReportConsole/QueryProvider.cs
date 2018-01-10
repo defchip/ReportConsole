@@ -31,8 +31,16 @@ namespace ReportConsole
 		{
 			dataAccess.ExecuteParameterisedSproc("USP_INS_SOURCE",
 				new object[,]{
-				{"SOURCE_NAME",source.SourceName },
-				{"SOURCE_CONN",source.SourceConn}});
+				{"SOURCE_NAME",source.Name },
+				{"SOURCE_CONN",source.DatabaseConnection()} });
 		}
+
+		public DataTable GetServers(string conn)
+		{
+			string query = "select name from sys.databases WHERE database_id > 4";
+			return dataAccess.ExecuteSchemaQuery(query, conn);
+		}
+
 	}
 }
+//select name from sys.databases WHERE database_id > 4

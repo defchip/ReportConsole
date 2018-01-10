@@ -134,6 +134,39 @@ namespace ReportConsole
 				}
 			}
 		}
+
+		public DataTable ExecuteSchemaQuery(string query, string conn)
+		{
+			using (DataTable dt = new DataTable())
+			using (SqlConnection cnData = new SqlConnection(conn))
+			using (SqlCommand cmd = new SqlCommand(query, cnData))
+			{
+				try
+				{
+					cnData.Open();
+					dt.Load(cmd.ExecuteReader());
+					if (cnData != null)
+					{
+						cnData.Close();
+					}
+					return dt;
+				}
+				catch (SqlException sx)
+				{
+					switch (sx.Number)
+					{
+						case 53:
+							System.Windows.Forms.MessageBox.Show("No connection to " + conn + " could be established.");
+							break;
+						default:
+							System.Windows.Forms.MessageBox.Show(sx.Number.ToString());
+							break;
+					}
+					return null;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Returns true when query fetches a non-null value.
 		/// </summary>

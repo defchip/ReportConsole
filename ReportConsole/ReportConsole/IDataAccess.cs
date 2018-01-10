@@ -14,6 +14,7 @@ namespace ReportConsole
 		void ExecuteParameterisedSproc(string sprocName, object[,] fieldAndValue);
 		void ExecuteSproc(string sprocName);
 		string ToString();
+		DataTable ExecuteSchemaQuery(string x, string y);
 		#endregion
 	}
 }

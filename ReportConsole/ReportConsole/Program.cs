@@ -16,7 +16,7 @@ namespace ReportConsole
 		[STAThread]
 		static void Main()
 		{
-			var conn = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+			var conn = ConfigurationManager.ConnectionStrings["reportConsole"].ConnectionString;
 
 			IDataAccess dataAccess = new DataAccess(conn);
 			if (!dataAccess.HasOpened)
