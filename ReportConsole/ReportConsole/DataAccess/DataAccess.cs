@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 #endregion
 
 namespace ReportConsole
@@ -86,7 +87,7 @@ namespace ReportConsole
 		/// </summary>
 		/// <param name="query">SQL SELECT query.</param>
 		/// <returns></returns>
-		public DataTable GetDataTable(string query)
+		public async Task<DataTable> GetDataTableAsync(string query)
 		{
 			using (DataTable dt = new DataTable())
 			using (SqlConnection cnData = new SqlConnection(DATA_CONNECTION_STRING))
@@ -95,7 +96,7 @@ namespace ReportConsole
 				try
 				{
 					cnData.Open();
-					dt.Load(cmd.ExecuteReader());
+					await Task.Run(() => {dt.Load(cmd.ExecuteReader());});
 					if (cnData != null)
 					{
 						cnData.Close();
@@ -113,7 +114,7 @@ namespace ReportConsole
 		/// </summary>
 		/// <param name="query">SQL SELECT query.</param>
 		/// <returns></returns>
-		public object GetDataItem(string query)
+		public async Task<object> GetDataItemAsync(string query)
 		{
 			using (SqlConnection cnData = new SqlConnection(DATA_CONNECTION_STRING))
 			using (SqlCommand cmd = new SqlCommand(query, cnData))
@@ -121,7 +122,8 @@ namespace ReportConsole
 				try
 				{
 					cnData.Open();
-					object item = cmd.ExecuteScalar();
+					object item = null;
+					await Task.Run(() => { item = cmd.ExecuteScalar(); });
 					if (cnData != null)
 					{
 						cnData.Close();
@@ -203,6 +205,7 @@ namespace ReportConsole
 				}
 			}
 		}
+
 		/// <summary>
 		/// Executes a named, parameterless stored procedure.
 		/// </summary>
@@ -236,7 +239,8 @@ namespace ReportConsole
 				}
 			}
 		}
-		public void ExecuteParameterisedSproc(string sprocName, object[,] fieldAndValue)
+
+		public async void ExecuteParameterisedSprocAsync(string sprocName, object[,] fieldAndValue)
 		{
 			string sqlVariablePrefix = "@";
 			using (SqlConnection cnData = new SqlConnection(DATA_CONNECTION_STRING))
@@ -264,7 +268,7 @@ namespace ReportConsole
 							//Debug.Print(fieldName + ":" + fieldValue + ":" + fieldDataType);
 						}
 						cmd.Prepare();
-						cmd.ExecuteNonQuery();
+						await Task.Run(() => {cmd.ExecuteNonQuery();});
 						trans.Commit();
 					}
 					catch (Exception ex)

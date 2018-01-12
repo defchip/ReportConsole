@@ -1,14 +1,8 @@
-﻿using ReportConsole.BusinessObjects;
-using ReportConsole.HelperClasses;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ReportConsole.HelperClasses;
 
 namespace ReportConsole.UI
 {
@@ -35,9 +29,9 @@ namespace ReportConsole.UI
 			PopulateSources();
 		}
 
-		private void PopulateSources()
+		private async void PopulateSources()
 		{
-			DataTable data = queryProvider.GetSources();
+			DataTable data = await queryProvider.GetSources();
 			ComboBoxHelper cbo = new ComboBoxHelper(this.cboSources, data);
 			this.cboSources.SelectedIndex = -1;
 		}

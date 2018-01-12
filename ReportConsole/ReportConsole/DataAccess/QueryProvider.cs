@@ -1,10 +1,6 @@
-﻿using ReportConsole.BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Data;
 using System.Threading.Tasks;
+using ReportConsole.BusinessObjects;
 
 namespace ReportConsole
 {
@@ -17,22 +13,23 @@ namespace ReportConsole
 			this.dataAccess = dataAccess;
 		}
 
-		public DataTable GetData()
+		public async Task<DataTable> GetData()
 		{
 			string query = "SELECT * FROM SOURCES";
-			return dataAccess.GetDataTable(query);
+			return await dataAccess.GetDataTableAsync(query);
 		}
 
-		public DataTable GetSources()
+		public async Task<DataTable> GetSources()
 		{
 			string query = "SELECT * FROM SOURCES";
-			return dataAccess.GetDataTable(query);
+			//DataTable data = await dataAccess.GetDataTableAsync(query);
+			return await dataAccess.GetDataTableAsync(query);
 		}
 
-		public DataTable GetSource(int sourceId)
+		public async Task<DataTable> GetSource(int sourceId)
 		{
 			string query = "SELECT * FROM SOURCES WHERE SOURCE_ID = " + sourceId.ToString();
-			return dataAccess.GetDataTable(query);
+			return await dataAccess.GetDataTableAsync(query);
 		}
 
 
@@ -40,7 +37,7 @@ namespace ReportConsole
 		//in data access layer
 		public void AddSource(Source source)
 		{
-			dataAccess.ExecuteParameterisedSproc("USP_INS_SOURCE",
+			dataAccess.ExecuteParameterisedSprocAsync("USP_INS_SOURCE",
 				new object[,]{
 				{"SOURCE_NAME",source.Name },
 				{"SOURCE_CONN",source.DatabaseConnection()} });

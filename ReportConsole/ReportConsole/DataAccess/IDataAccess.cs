@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace ReportConsole
 {
@@ -8,13 +9,13 @@ namespace ReportConsole
 		#region Method Signatures
 		bool DatabaseItemExists(string query);
 		bool HasOpened { get; set; }
-		DataTable GetDataTable(string query);
-		object GetDataItem(string query);
+		Task<DataTable> GetDataTableAsync(string query);
+		Task<object> GetDataItemAsync(string query);
 		string ErrMessage { get; set; }
-		void ExecuteParameterisedSproc(string sprocName, object[,] fieldAndValue);
+		void ExecuteParameterisedSprocAsync(string sprocName, object[,] fieldAndValue);
 		void ExecuteSproc(string sprocName);
 		string ToString();
-		DataTable ExecuteSchemaQuery(string x, string y);
+		DataTable ExecuteSchemaQuery(string query, string conn);
 		#endregion
 	}
 }

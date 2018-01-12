@@ -32,9 +32,9 @@ namespace ReportConsole.UI
 			InitialiseSource();
 		}
 
-		private void InitialiseSource()
+		private async void InitialiseSource()
 		{
-			DataTable data = queryProvider.GetSource(sourceId);
+			DataTable data = await queryProvider.GetSource(sourceId);
 			string sourceName = data.Rows[0][1].ToString();
 			this.toolStripStatusLabel1.Text = sourceName;
 			statusStrip.Refresh();
