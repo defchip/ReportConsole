@@ -1,2 +1,2 @@
 # ReportConsole
-Report Console
+Sample C#/ADO.NET/Winforms application.
