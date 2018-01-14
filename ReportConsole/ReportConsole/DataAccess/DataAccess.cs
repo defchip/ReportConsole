@@ -19,6 +19,7 @@ namespace ReportConsole
 		private readonly string DATA_CONNECTION_STRING;
 		IDictionary<System.Type, DbType> typeDict = new Dictionary<System.Type, DbType>();
 		#endregion
+
 		public bool HasOpened
 		{
 			get { return hasOpened; }
@@ -29,6 +30,7 @@ namespace ReportConsole
 			get { return errMessage; }
 			set { errMessage = value; }
 		}
+
 		/// <summary>
 		/// Show connection string.
 		/// </summary>
@@ -37,6 +39,7 @@ namespace ReportConsole
 		{
 			return DATA_CONNECTION_STRING;
 		}
+
 		/// <summary>
 		/// Implements ADO.NET database access methods to SQL database. 
 		/// </summary>
@@ -82,8 +85,9 @@ namespace ReportConsole
 					}
 				}
 		}
+
 		/// <summary>
-		/// Returns a System.Data.DataTable.
+		/// Returns a System.Data.DataTable asyncronously.
 		/// </summary>
 		/// <param name="query">SQL SELECT query.</param>
 		/// <returns></returns>
@@ -109,8 +113,36 @@ namespace ReportConsole
 				}
 			}
 		}
+
 		/// <summary>
-		/// Returns a database value cast as an object.
+		/// Returns a System.Data.DataTable syncronously.
+		/// </summary>
+		/// <param name="query">SQL SELECT query.</param>
+		/// <returns></returns>
+		public DataTable GetDataTable(string query)
+		{
+			using (DataTable dt = new DataTable())
+			using (SqlConnection cnData = new SqlConnection(DATA_CONNECTION_STRING))
+			using (SqlCommand cmd = new SqlCommand(query, cnData))
+			{
+				try
+				{
+					cnData.Open();
+					dt.Load(cmd.ExecuteReader());
+					if (cnData != null)
+					{
+						cnData.Close();
+					}
+					return dt;
+				} catch
+				{
+					throw;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns a database value cast as an object asyncronously.
 		/// </summary>
 		/// <param name="query">SQL SELECT query.</param>
 		/// <returns></returns>
@@ -137,6 +169,38 @@ namespace ReportConsole
 			}
 		}
 
+		/// <summary>
+		/// Returns a database value cast as an object syncronously.
+		/// </summary>
+		/// <param name="query">SQL SELECT query.</param>
+		/// <returns></returns>
+		public object GetDataItem(string query)
+		{
+			using (SqlConnection cnData = new SqlConnection(DATA_CONNECTION_STRING))
+			using (SqlCommand cmd = new SqlCommand(query, cnData))
+			{
+				try
+				{
+					cnData.Open();
+					object item = cmd.ExecuteScalar();
+					if (cnData != null)
+					{
+						cnData.Close();
+					}
+					return item;
+				} catch
+				{
+					throw;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns a database value cast as an object asyncronously.
+		/// </summary>
+		/// <param name="query">SQL SELECT query.</param>
+		/// <param name="conn">Connection string.</param>
+		/// <returns></returns>
 		public DataTable ExecuteSchemaQuery(string query, string conn)
 		{
 			using (DataTable dt = new DataTable())
@@ -226,6 +290,39 @@ namespace ReportConsole
 						cmd.Prepare();
 						cmd.ExecuteNonQuery();
 						trans.Commit();
+					} catch (Exception ex)
+					{
+						trans.Rollback();
+						throw new ApplicationException("Something wrong happened in the data access layer: ", ex);
+					}
+				}
+				if (cnData != null)
+				{
+					cnData.Close();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Executes a named, parameterless stored procedure.
+		/// </summary>
+		/// <param name="sprocName">Stored procedure name.</param>
+		public async void ExecuteSprocAsync(string sprocName)
+		{
+			using (SqlConnection cnData = new SqlConnection(DATA_CONNECTION_STRING))
+			{
+				cnData.Open();
+				using (SqlTransaction trans = cnData.BeginTransaction())
+				using (SqlCommand cmd = cnData.CreateCommand())
+				{
+					try
+					{
+						cmd.Transaction = trans;
+						cmd.CommandType = CommandType.StoredProcedure;
+						cmd.CommandText = sprocName;
+						cmd.Prepare();
+						await Task.Run(() => { cmd.ExecuteNonQuery(); });
+						trans.Commit();
 					}
 					catch (Exception ex)
 					{
@@ -240,6 +337,12 @@ namespace ReportConsole
 			}
 		}
 
+		/// <summary>
+		/// Executes a named, parametered stored procedure.
+		/// Parameters are passed to method as a multi-dimensional array of objects.
+		/// </summary>
+		/// <param name="sprocName"></param>
+		/// <param name="fieldAndValue"></param>
 		public async void ExecuteParameterisedSprocAsync(string sprocName, object[,] fieldAndValue)
 		{
 			string sqlVariablePrefix = "@";
@@ -272,6 +375,55 @@ namespace ReportConsole
 						trans.Commit();
 					}
 					catch (Exception ex)
+					{
+						trans.Rollback();
+						throw new ApplicationException("Something wrong happened in the data access layer: ", ex);
+					}
+				}
+				if (cnData != null)
+				{
+					cnData.Close();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Executes a named, parametered stored procedure.
+		/// Parameters are passed to method as a multi-dimensional array of objects.
+		/// </summary>
+		/// <param name="sprocName"></param>
+		/// <param name="fieldAndValue"></param>
+		public void ExecuteParameterisedSproc(string sprocName, object[,] fieldAndValue)
+		{
+			string sqlVariablePrefix = "@";
+			using (SqlConnection cnData = new SqlConnection(DATA_CONNECTION_STRING))
+			{
+				cnData.Open();
+				using (SqlTransaction trans = cnData.BeginTransaction())
+				using (SqlCommand cmd = new SqlCommand(sprocName, cnData))
+				{
+					try
+					{
+						cmd.Transaction = trans;
+						cmd.CommandType = CommandType.StoredProcedure;
+						for (int fieldIndex = 0; fieldIndex <= fieldAndValue.GetUpperBound(0); fieldIndex++)
+						{
+							string fieldName = fieldAndValue[fieldIndex, 0].ToString();
+							string fieldValue = fieldAndValue[fieldIndex, 1].ToString();
+							int fieldLength = fieldValue.Length;
+							string fieldDataType = fieldAndValue[fieldIndex, 1].GetType().ToString();
+							SqlParameter parameter = cmd.CreateParameter();
+							parameter.ParameterName = sqlVariablePrefix + fieldName;
+							parameter.Value = fieldValue;
+							parameter.DbType = typeDict[fieldAndValue[fieldIndex, 1].GetType()];
+							parameter.Size = fieldLength;
+							cmd.Parameters.Add(parameter);
+							//Debug.Print(fieldName + ":" + fieldValue + ":" + fieldDataType);
+						}
+						cmd.Prepare();
+						cmd.ExecuteNonQuery();
+						trans.Commit();
+					} catch (Exception ex)
 					{
 						trans.Rollback();
 						throw new ApplicationException("Something wrong happened in the data access layer: ", ex);

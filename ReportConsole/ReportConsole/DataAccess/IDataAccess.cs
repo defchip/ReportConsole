@@ -9,12 +9,22 @@ namespace ReportConsole
 		#region Method Signatures
 		bool DatabaseItemExists(string query);
 		bool HasOpened { get; set; }
+
 		Task<DataTable> GetDataTableAsync(string query);
+		DataTable GetDataTable(string query);
+
 		Task<object> GetDataItemAsync(string query);
-		string ErrMessage { get; set; }
-		void ExecuteParameterisedSprocAsync(string sprocName, object[,] fieldAndValue);
+		object GetDataItem(string query);
+
+		void ExecuteSprocAsync(string sprocName);
 		void ExecuteSproc(string sprocName);
+
+		void ExecuteParameterisedSprocAsync(string sprocName, object[,] fieldAndValue);
+		void ExecuteParameterisedSproc(string sprocName, object[,] fieldAndValue);
+
+		string ErrMessage { get; set; }
 		string ToString();
+
 		DataTable ExecuteSchemaQuery(string query, string conn);
 		#endregion
 	}
